@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Lbanner : 通过ViewPager实现轮播大图，无限循环，并实现图片点击事件">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Lbanner</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jingbolee/LBanner">View on GitHub</a>
+
+          <h1 id="project_title">Lbanner</h1>
+          <h2 id="project_tagline">通过ViewPager实现轮播大图，无限循环，并实现图片点击事件</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jingbolee/LBanner/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jingbolee/LBanner/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="lbanner" class="anchor" href="#lbanner" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LBanner</h1>
+
+<h2>
+<a id="功能" class="anchor" href="#%E5%8A%9F%E8%83%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>功能</h2>
+
+<ol>
+<li>通过ViewPager实现轮播大图</li>
+<li>延迟5秒自动无限循环</li>
+<li>实现图片点击事件</li>
+</ol>
+
+<h2>
+<a id="知识点" class="anchor" href="#%E7%9F%A5%E8%AF%86%E7%82%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>知识点</h2>
+
+<ul>
+<li>
+<p>Handle实现自动循环</p>
+
+<ul>
+<li>使用了handle.sendEmptyMessageDelayed()方法，延迟一定时间执行</li>
+<li>在handleMessage()方法中，调用Viewpager的setCurrentItem()方法，可以直接设置显示的页面。</li>
+<li>先通过ViewPager的getCurrentItem()方法获取到当前的位置，然后+1，然后通过setCurrentItem()方法，实现到下一个页面；上面步骤完成以后，再次调用handle.sendEmptyMessageDelayed()方法，实现自动无限循环功能</li>
+</ul>
+</li>
+<li>
+<p>创建point：可以使用图片，也可以通过shape创建。</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="oval"&gt;
+    &lt;solid android:color="@android:color/white"&gt;&lt;/solid&gt;
+&lt;/shape&gt;
+</code></pre>
+</li>
+<li>
+<p>创建多个point，并加入到LinearLayout中，每个point大小为8dp,point间隔为6dp.</p>
+
+<blockquote>
+<p>注意dp和sp的转换。</p>
+</blockquote>
+
+<pre><code>for ( int i = 0; i &lt; newsLists.size(); i++ ) {
+            View view = new View(this);
+            view.setBackgroundResource(R.drawable.point_unfocus);
+            int dipValue = DensityUtil.dip2px(MainActivity.this, 8);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dipValue, dipValue);
+            if ( i &gt; 0 ) {
+                params.leftMargin = DensityUtil.dip2px(MainActivity.this, 6);
+            }
+            view.setLayoutParams(params);
+            ll_donot_group.addView(view);
+        }
+</code></pre>
+</li>
+</ul>
+
+<p>其他ViewPager注意事项请参考：<a href="http://www.lijingbo.cc/customview_viewpager/">Customview viewpager</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Lbanner maintained by <a href="https://github.com/jingbolee">jingbolee</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
