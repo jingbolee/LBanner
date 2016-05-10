@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     class NewsImageAdapter extends PagerAdapter {
         @Override
         public int getCount() {
-            return newsLists.size();
+            return Integer.MAX_VALUE;
         }
 
         @Override
