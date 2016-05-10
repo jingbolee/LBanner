@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp_image;
     private TextView tv_intro;
     private LinearLayout ll_donot_group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +63,15 @@ public class MainActivity extends AppCompatActivity {
     private void initListener() {
         vp_image.setAdapter(new NewsImageAdapter());
         vp_image.addOnPageChangeListener(new VpOnPageChangeListener());
-        updateIntroAndPoint(0);
+        int centerValue = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2) % newsLists.size();
+        //设置viewpager开始的位置，实现左右无限滑动
+        vp_image.setCurrentItem(centerValue);
     }
 
     class NewsImageAdapter extends PagerAdapter {
         @Override
         public int getCount() {
+            //Viewpager的数量设置为int的最大值，实现无限循环
             return Integer.MAX_VALUE;
         }
 
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            //对新的位置进行去余操作，可以得到真实的位置，然后从lists中获取数据。
             final int newPosition = position % newsLists.size();
             View View = new View(MainActivity.this);
             View.setBackgroundResource(newsLists.get(newPosition).getImageResource());
