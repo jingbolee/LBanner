@@ -1,6 +1,8 @@
 package com.lijingbo.lbanner;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int LOOP = 0;
+    private int loopDelayTime = 5000;
     private List< NewsBean > newsLists;
     private ViewPager vp_image;
     private TextView tv_intro;
     private LinearLayout ll_donot_group;
+    //通过handler实现自动播放
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //设置viewpager的页面为当前页面+1
+            vp_image.setCurrentItem(vp_image.getCurrentItem() + 1);
+            handler.sendEmptyMessageDelayed(LOOP, loopDelayTime);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         int centerValue = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2) % newsLists.size();
         //设置viewpager开始的位置，实现左右无限滑动
         vp_image.setCurrentItem(centerValue);
+        //延迟4000ms
+        handler.sendEmptyMessageDelayed(LOOP, loopDelayTime);
     }
 
     class NewsImageAdapter extends PagerAdapter {
