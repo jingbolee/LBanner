@@ -1,8 +1,12 @@
 # LBanner
 ##功能
 1. 通过ViewPager实现轮播大图
-2. 延迟5秒自动无限循环
+2. 默认延迟5秒自动无限循环
 3. 实现图片点击事件
+4. 通过布局文件添加lbanner，并在布局文件中设置loop和loopovertime属性，显示的图片和文本需要在代码中通过setResoutseLists()设置。
+5. 通过代码使用lbanner，需要通过setResoutseLists()设置显示图片和文本。  通过setLoop()，setLoopOverTime()设置是否循环和循环时间，这两个方法放在setResoutseLists()方法前才会生效。
+6. loopovertime大于1秒才能生效
+7. 通过接口LbannerItemClickListener()获取到点击页面。
 
 ##知识点
 - Handle实现自动循环
